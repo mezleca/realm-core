@@ -44,9 +44,11 @@
 #endif
 
 #if defined(_WIN32)
-#include <Windows.h>
+#include <windows.h>
 #include <bcrypt.h>
+#ifdef _MSC_VER
 #pragma comment(lib, "bcrypt.lib")
+#endif
 #else
 #include <sys/mman.h>
 #include <unistd.h>

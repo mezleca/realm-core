@@ -13,7 +13,7 @@
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #include <stdio.h>
-#include <Ws2def.h>
+#include <ws2def.h>
 #pragma comment(lib, "Ws2_32.lib")
 #else
 #include <sys/socket.h>

@@ -19,7 +19,7 @@
 #ifndef REALM_UTIL_SAFE_INT_OPS_HPP
 #define REALM_UTIL_SAFE_INT_OPS_HPP
 
-#ifdef _WIN32
+#ifdef _MSC_VER
 #undef max // collides with numeric_limits::max called later in this header file
 #undef min // collides with numeric_limits::min called later in this header file
 #include <safeint.h>

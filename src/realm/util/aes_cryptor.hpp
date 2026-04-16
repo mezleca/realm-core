@@ -55,7 +55,9 @@ protected:
 #include <windows.h>
 #include <stdio.h>
 #include <bcrypt.h>
+#ifdef _MSC_VER
 #pragma comment(lib, "bcrypt.lib")
+#endif
 #else
 #include <openssl/sha.h>
 #include <openssl/evp.h>

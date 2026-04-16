@@ -45,10 +45,15 @@ namespace {
 
 #ifdef REALM_COMPILER_SSE
 #if !defined __clang__ && ((defined(_MSC_FULL_VER) && _MSC_FULL_VER >= 160040219) || defined __GNUC__)
-#if defined REALM_COMPILER_AVX && defined __GNUC__
-#define _XCR_XFEATURE_ENABLED_MASK 0
+#if defined __GNUC__
+#if defined _XCR_XFEATURE_ENABLED_MASK
+#define REALM_XCR_XFEATURE_ENABLED_MASK _XCR_XFEATURE_ENABLED_MASK
+#else
+#define REALM_XCR_XFEATURE_ENABLED_MASK 0
+#endif
 
-inline unsigned long long _xgetbv(unsigned index)
+#if defined(__MINGW32__)
+inline unsigned long long realm_xgetbv(unsigned index)
 {
 #if REALM_HAVE_AT_LEAST_GCC(4, 4)
     unsigned int eax, edx;
@@ -59,7 +64,7 @@ inline unsigned long long _xgetbv(unsigned index)
     return 0;
 #endif
 }
-
+#endif
 #endif
 #endif
 #endif
@@ -111,7 +116,11 @@ void cpuid_init()
 
     if (osUsesXSAVE_XRSTORE && cpuAVXSuport) {
         // Check if the OS will save the YMM registers
-        unsigned long long xcrFeatureMask = _xgetbv(_XCR_XFEATURE_ENABLED_MASK);
+#if defined(__MINGW32__)
+        unsigned long long xcrFeatureMask = realm_xgetbv(REALM_XCR_XFEATURE_ENABLED_MASK);
+#else
+        unsigned long long xcrFeatureMask = _xgetbv(REALM_XCR_XFEATURE_ENABLED_MASK);
+#endif
         avxSupported = (xcrFeatureMask & 0x6) || false;
     }
 #endif

@@ -12,7 +12,7 @@
 #include <sys/utsname.h>
 #else
 #include <windows.h>
-#include <VersionHelpers.h>
+#include <versionhelpers.h>
 #endif
 
 using namespace realm;

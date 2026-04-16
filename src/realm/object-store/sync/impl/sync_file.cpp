@@ -38,12 +38,17 @@
 #include <io.h>
 #include <fcntl.h>
 
-inline static int mkstemp(char* _template)
+inline static int realm_mkstemp(char* _template)
 {
     return _open(_mktemp(_template), _O_CREAT | _O_TEMPORARY, _S_IREAD | _S_IWRITE);
 }
 #else
 #include <unistd.h>
+
+inline static int realm_mkstemp(char* _template)
+{
+    return mkstemp(_template);
+}
 #endif
 
 
@@ -210,7 +215,7 @@ std::string reserve_unique_file_name(const std::string& path, const std::string&
 {
     REALM_ASSERT_DEBUG(template_string.find("XXXXXX") != std::string::npos);
     std::string path_buffer = file_path_by_appending_component(path, template_string, FilePathType::File);
-    int fd = mkstemp(&path_buffer[0]);
+    int fd = realm_mkstemp(&path_buffer[0]);
     if (fd < 0) {
         int err = errno;
         throw RuntimeError(ErrorCodes::FileOperationFailed,

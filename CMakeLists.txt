@@ -285,6 +285,10 @@ if(CMAKE_USE_PTHREADS_INIT)
 endif()
 
 find_package(Backtrace)
+if(MINGW)
+    set(Backtrace_FOUND OFF)
+    set(Backtrace_HEADER "")
+endif()
 set(REALM_HAVE_BACKTRACE ${Backtrace_FOUND})
 
 if(REALM_ENABLE_SYNC)

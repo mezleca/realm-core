@@ -11,7 +11,7 @@
 #include <openssl/x509v3.h>
 #ifdef _WIN32
 using osslX509_NAME = X509_NAME; // alias this before including wincrypt.h because it gets clobbered
-#include <Windows.h>
+#include <windows.h>
 #include <wincrypt.h>
 #else
 #include <pthread.h>

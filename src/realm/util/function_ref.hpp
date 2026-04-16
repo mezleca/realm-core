@@ -27,7 +27,7 @@ namespace realm::util {
 template <typename Signature>
 class UniqueFunction;
 
-#ifdef _WIN32
+#ifdef _MSC_VER
 // VC++ warns about multiple copy constructors, but we want both const and
 // non-const version to ensure they're a better match than the wrapping
 // constructor. We could instead use enable_if to make the wrapping constructor
@@ -64,7 +64,7 @@ public:
     FunctionRef(ThisType&&) noexcept = default;
     ThisType& operator=(ThisType&&) noexcept = default;
 #else
-#ifdef _WIN32
+#ifdef _MSC_VER
     // VC++ incorrectly rejects multiple versions of a defaulted special member function
     constexpr FunctionRef(ThisType& o) noexcept
         : m_obj(o.m_obj)
@@ -146,7 +146,7 @@ constexpr void swap(FunctionRef<R(Args...)>& lhs, FunctionRef<R(Args...)>& rhs) 
 
 } // namespace realm::util
 
-#ifdef _WIN32
+#ifdef _MSC_VER
 #pragma warning(pop)
 #endif
 

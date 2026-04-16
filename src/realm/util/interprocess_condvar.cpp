@@ -35,7 +35,7 @@
 #endif
 
 #ifdef _WIN32
-#include <Windows.h>
+#include <windows.h>
 #include <set>
 #include <queue>
 #include <optional>

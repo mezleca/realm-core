@@ -34,7 +34,7 @@
 #ifdef _WIN32
 #include <condition_variable> // for windows non-interprocess condvars we use std::condition_variable
 #include <thread>
-#include <Windows.h>
+#include <windows.h>
 #include <process.h> // _getpid()
 #else
 #include <pthread.h>

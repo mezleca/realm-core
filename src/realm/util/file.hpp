@@ -28,7 +28,7 @@
 #include <string>
 
 #ifdef _WIN32
-#include <Windows.h>
+#include <windows.h>
 #else
 #include <dirent.h> // POSIX.1-2001
 #include <sys/stat.h>
@@ -41,7 +41,7 @@
 #include <realm/util/safe_int_ops.hpp>
 #include <realm/utilities.hpp>
 
-#if defined(_MSVC_LANG) // compiling with MSVC
+#if defined(_WIN32)
 #include <filesystem>
 #define REALM_HAVE_STD_FILESYSTEM 1
 #else

@@ -32,12 +32,30 @@
 #include <sys/time.h>
 #endif
 
+#if defined(_WIN32)
+#include <windows.h>
+#endif
+
 // Condvar Emulation is required if RobustMutex emulation is enabled
 #if REALM_ROBUST_MUTEX_EMULATION || defined(_WIN32)
 #define REALM_CONDVAR_EMULATION
 #endif
 
 namespace realm {
+
+#if defined(_WIN32)
+inline int realm_timespec_get(timespec* ts)
+{
+    static const uint64_t WINDOWS_EPOCH_DIFF_SECS = 11644473600ULL;
+    FILETIME ft;
+    GetSystemTimeAsFileTime(&ft);
+    uint64_t ticks = (static_cast<uint64_t>(ft.dwHighDateTime) << 32) | ft.dwLowDateTime;
+    uint64_t ns = ticks * 100ULL;
+    ts->tv_sec = static_cast<time_t>(ns / 1000000000ULL - WINDOWS_EPOCH_DIFF_SECS);
+    ts->tv_nsec = static_cast<long>(ns % 1000000000ULL);
+    return 1;
+}
+#endif
 namespace util {
 
 
@@ -117,7 +135,7 @@ public:
             if (tp) {
                 struct timespec now;
 #ifdef _WIN32
-                timespec_get(&now, TIME_UTC);
+                realm_timespec_get(&now);
 #else
                 clock_gettime(CLOCK_REALTIME, &now);
 #endif

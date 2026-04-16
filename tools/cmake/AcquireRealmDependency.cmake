@@ -28,6 +28,12 @@ function(realm_acquire_dependency dep_name dep_version out_dep_cmake)
         set(_target_architecture ${CMAKE_SYSTEM_PROCESSOR})
     endif()
 
+    if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+        if(_target_architecture STREQUAL "AMD64" OR _target_architecture STREQUAL "x86_64")
+            set(_target_architecture "x64")
+        endif()
+    endif()
+
     if(NOT EXISTS ${CMAKE_CURRENT_BINARY_DIR}/${dep_name}/include.cmake)
         set(DEP_URL "https://static.realm.io/downloads/dependencies/${dep_name}/${dep_version}/${dep_name}-${dep_version}-${_target_architecture_${CMAKE_SYSTEM_NAME}_${_target_architecture}}-${_target_platform_name_${CMAKE_SYSTEM_NAME}}.tar.gz")
         message(STATUS "Getting ${DEP_URL}...")

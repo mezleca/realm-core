@@ -29,9 +29,9 @@
 
 #ifdef _WIN32
 
-#include <WinSock2.h>
+#include <winsock2.h>
 #include <intrin.h>
-#include <BaseTsd.h>
+#include <basetsd.h>
 
 #if !defined(_SSIZE_T_) && !defined(_SSIZE_T_DEFINED)
 typedef SSIZE_T ssize_t;
