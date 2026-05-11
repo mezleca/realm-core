@@ -45,8 +45,7 @@ namespace {
 
 #ifdef REALM_COMPILER_SSE
 #if !defined __clang__ && ((defined(_MSC_FULL_VER) && _MSC_FULL_VER >= 160040219) || defined __GNUC__)
-#if defined __GNUC__
-#if defined _XCR_XFEATURE_ENABLED_MASK
+#if defined(__GNUC__) && defined(_XCR_XFEATURE_ENABLED_MASK)
 #define REALM_XCR_XFEATURE_ENABLED_MASK _XCR_XFEATURE_ENABLED_MASK
 #else
 #define REALM_XCR_XFEATURE_ENABLED_MASK 0
@@ -67,8 +66,6 @@ inline unsigned long long realm_xgetbv(unsigned index)
 #endif
 #endif
 #endif
-#endif
-
 } // anonymous namespace
 
 
