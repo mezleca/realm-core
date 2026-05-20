@@ -371,12 +371,9 @@ add_subdirectory(bindgen)
 # Install the licence and changelog files
 install(FILES LICENSE CHANGELOG.md DESTINATION "doc/realm" COMPONENT devel)
 
-# Only prepare test/install/package targets if we're not a submodule
-if(REALM_CORE_SUBMODULE_BUILD)
-    return()
-endif()
-
-# Make the project importable from the build directory
+# Make the project importable from the build directory and install tree.
+# SDKs embedding realm-core still need these exports so downstream
+# find_package(cpprealm CONFIG REQUIRED) can resolve Realm.
 set(REALM_EXPORTED_TARGETS
         Storage
         QueryParser
